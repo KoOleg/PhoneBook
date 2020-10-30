@@ -1,30 +1,57 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class PhoneBook {
 
+    private static ArrayList array_contact = new ArrayList();
+    private static ArrayList array_phone = new ArrayList();
+
     public static void main(String[] args) {
-        //Добавить считывание ввода пользователя в цикле
-    }
+        Scanner scanner = new Scanner(System.in);
+        String name = formatName(scanner.nextLine());
+        while (name != null) {
+            int index = checkName(name);
+            if (index == -1) {
+                System.out.println("Введите телефон");
+                String phone = scanner.nextLine();
+                while (!correctPhone(phone)) {
+                    System.out.println("Enter correct phone");
+                    phone = scanner.nextLine();
+                }
+                array_phone.add(formatPhone(phone));
+                array_contact.add(name);
+            }
+            index = array_contact.indexOf(name);
+            System.out.println(array_contact.get(index) + ":" + array_phone.get(index));
+            name = formatName(scanner.nextLine());
+        }
 
-    public static boolean checkPhoneNumber(String phoneNumber) {
-        return true;
-    }
-
-    public static boolean checkName(String name) {
-        return true;
     }
 
     public static String formatName(String name) {
-        return "";
+        String[] nameSplit = name.toLowerCase().trim().split(" ");
+        String formatName = "";
+        for (String i : nameSplit) {
+            formatName += i.substring(0, 1).toUpperCase() + i.substring(1) + " ";
+        }
+        return formatName;
     }
 
-    public static String formatPhoneNumber(String number) {
-        return "";
+    public static int checkName(String name) {
+        int resut = array_contact.indexOf(name);
+        return resut;
     }
 
-    public static void add(String[][] book, String name, String number) {
-        //add logic
+    private static boolean correctPhone(String phone) {
+        Boolean result = phone.replaceAll("[^0-9]", "").length() == 11;
+        return result;
     }
 
-    public static void list(String[][] book) {
-        //print phone book
+    public static String formatPhone(String phone) {
+        String clean = phone.replaceAll("[^0-9]", "");
+        String finalPhone = "";
+        finalPhone = "+7 " + clean.substring(1, 4) + " " + clean.substring(4, 7);
+        finalPhone += " " + clean.substring(7, 9) + " " + clean.substring(9);
+        return finalPhone;
     }
 }
