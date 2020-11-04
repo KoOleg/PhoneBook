@@ -31,9 +31,7 @@ public class PhoneBook {
     public static String formatName(String name) {
         String[] nameSplit = name.toLowerCase().trim().split(" ");
         String formatName = "";
-        if (name.equals("c")){
-            return name;
-        }
+        if (name.equals("c")) return name;
         for (String i : nameSplit) {
             formatName += i.substring(0, 1).toUpperCase() + i.substring(1) + " ";
         }
